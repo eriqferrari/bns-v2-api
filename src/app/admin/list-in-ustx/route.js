@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import clientPromise, { clientPromiseStxmap } from "../../../components/mongodb"
+import clientPromise from "../../../components/mongodb"
 import { headers } from 'next/headers'
 
 
@@ -17,10 +17,10 @@ export async function POST(req,res) {
     
 
    const client = await clientPromise
-   const clientStxmap = await clientPromiseStxmap
+ 
 
    const db = client.db("marketplaceStxmap")
-   const dbmap = clientStxmap.db("stxmap")
+
    const data = await req.json()
    // const txs = data.apply[0].transactions
    const tx = data.tx
@@ -35,7 +35,7 @@ export async function POST(req,res) {
          const sender = tx.metadata.sender
          const print = tx.metadata.receipt.events[0].data.value
          const map = print.id.toString()
-         const stxmap =  await dbmap.collection('stxmaps').find({map: print.id}).project({_id: 0, categories: 1, rank: 1, txs: 1}).toArray()
+         const stxmap =  await db.collection('stxmaps').find({map: print.id}).project({_id: 0, categories: 1, rank: 1, txs: 1}).toArray()
          if (maps.includes(map)) {
          await db.collection('nftmarket')
          .updateOne({map: map, status: "Available"},

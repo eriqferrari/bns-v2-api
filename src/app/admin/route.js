@@ -20,7 +20,7 @@ export async function POST(req,res) {
 
 
 
-   const db = client.db("marketplaceStxmap")
+   const db = client.db("domains")
    const data = await req.json()
    const txs = data.apply[0].transactions
    const block = data.apply[0].block_identifier.index
@@ -63,26 +63,15 @@ export async function POST(req,res) {
         const call = tx.metadata.description.split("::")[1]
 
         if (call.startsWith("list-in-ustx")) {
-          await updateDb("/admin/list-in-ustx", tx, block, timestamp)
+          // await updateDb("/admin/list-in-ustx", tx, block, timestamp)
         }
         if (call.startsWith("unlist-in-ustx")) {
-          await updateDb("/admin/unlist-in-ustx", tx, block, timestamp)        
+          // await updateDb("/admin/unlist-in-ustx", tx, block, timestamp)        
         }
         if (call.startsWith("buy-in-ustx")) {
-          await updateDb("/admin/buy-in-ustx", tx, block, timestamp)
+          // await updateDb("/admin/buy-in-ustx", tx, block, timestamp)
         }
-        if (call.startsWith("transfer")) {
-
-          const events = tx.metadata.receipt.events
-
-          for (const event of events) {
-            if (event.data.value.a === "unlist-in-ustx") {await updateDb("/admin/transfer", tx, block, timestamp)}
-          }
-          
-        }
-        if (call.startsWith("bridge-many")) {
-         await updateDb("/admin/check-minted", tx, block, timestamp)
-        }
+        
       }
 
       const s = {success: ""}
