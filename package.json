@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stacks/transactions": "^7.0.0",
     "debug": "^4.3.4",
     "dotenv": "^16.4.1",
     "encoding": "^0.1.13",
